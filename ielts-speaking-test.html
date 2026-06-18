@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IELTS Speaking Test</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=Playfair+Display:wght@600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --navy:#0F1D3A;--teal:#00B4A6;--teal-dark:#008F84;--teal-pale:#E0F7F5;
+  --amber-pale:#FEF3C7;--slate:#64748B;--slate-light:#94A3B8;
+  --white:#fff;--off:#F8FAFF;--border:#E2E8F0;
+  --red:#EF4444;--green:#10B981;--purple:#7C3AED;--amber:#F59E0B;
+}
+body{font-family:'DM Sans',sans-serif;background:var(--off);color:var(--navy);min-height:100vh}
+.hdr{background:var(--navy);height:62px;display:flex;align-items:center;justify-content:space-between;padding:0 2rem;position:sticky;top:0;z-index:99;box-shadow:0 2px 14px rgba(0,0,0,.2)}
+.logo{font-family:'Playfair Display',serif;font-size:1.1rem;color:#fff;display:flex;align-items:center;gap:9px}
+.logo-dot{width:7px;height:7px;border-radius:50%;background:var(--teal)}
+.pills{display:flex;gap:5px}
+.pill{padding:3px 10px;border-radius:20px;border:1px solid rgba(255,255,255,.1);font-size:.7rem;color:rgba(255,255,255,.35);letter-spacing:.04em;transition:all .3s}
+.pill.active{background:var(--teal);color:#fff;border-color:var(--teal)}
+.pill.done{background:rgba(0,180,166,.15);color:var(--teal);border-color:rgba(0,180,166,.3)}
+.main{max-width:720px;margin:0 auto;padding:2.5rem 1.5rem 5rem}
+.screen{display:none}
+.screen.active{display:block;animation:fu .38s ease}
+@keyframes fu{from{opacity:0;transform:translateY(13px)}to{opacity:1;transform:none}}
+.card{background:var(--white);border-radius:18px;border:1px solid var(--border);padding:2.4rem}
+.eyebrow{font-size:.7rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--teal);margin-bottom:.4rem}
+.h1{font-family:'Playfair Display',serif;font-size:1.7rem;margin-bottom:.35rem;line-height:1.2}
+.sub{color:var(--slate);font-size:.92rem;line-height:1.65;margin-bottom:1.9rem}
+.fg{margin-bottom:1.15rem}
+label{display:block;font-size:.8rem;font-weight:500;margin-bottom:5px;letter-spacing:.01em}
+input[type=text],input[type=email],input[type=tel]{width:100%;padding:.7rem 1rem;border:1px solid var(--border);border-radius:9px;font-family:'DM Sans',sans-serif;font-size:.93rem;color:var(--navy);outline:none;transition:border-color .2s,box-shadow .2s}
+input:focus{border-color:var(--teal);box-shadow:0 0 0 3px rgba(0,180,166,.1)}
+input.err{border-color:var(--red)}
+.ferr{color:var(--red);font-size:.76rem;margin-top:4px;display:none}
+.btn{display:inline-flex;align-items:center;gap:7px;padding:.7rem 1.5rem;border-radius:9px;font-family:'DM Sans',sans-serif;font-size:.92rem;font-weight:500;cursor:pointer;border:none;transition:all .18s}
+.btn-p{background:var(--teal);color:#fff}.btn-p:hover{background:var(--teal-dark)}
+.btn-o{background:transparent;border:1px solid var(--border);color:var(--navy)}.btn-o:hover{border-color:var(--teal);color:var(--teal)}
+.btn-sm{padding:.44rem .88rem;font-size:.81rem}
+.badge{display:inline-flex;align-items:center;gap:6px;padding:4px 13px;border-radius:20px;font-size:.74rem;font-weight:500;margin-bottom:1.35rem}
+.b1{background:var(--teal-pale);color:var(--teal-dark)}
+.b2{background:var(--amber-pale);color:#92400E}
+.b3{background:#EDE9FE;color:var(--purple)}
+.prog-row{display:flex;align-items:center;gap:.7rem;margin-bottom:1.4rem}
+.prog-label{font-size:.78rem;color:var(--slate);white-space:nowrap}
+.prog-track{flex:1;height:3px;background:var(--border);border-radius:3px;overflow:hidden}
+.prog-fill{height:100%;background:var(--teal);border-radius:3px;transition:width .5s ease}
+.qbox{background:var(--off);border-left:4px solid var(--teal);border-radius:0 10px 10px 0;padding:1.15rem 1.35rem;margin-bottom:1.15rem}
+.qbox.amber{border-left-color:var(--amber)}
+.qbox.purple{border-left-color:var(--purple)}
+.qnum{font-size:.7rem;color:var(--slate);margin-bottom:3px;letter-spacing:.05em;text-transform:uppercase}
+.qtext{font-size:1.03rem;line-height:1.65}
+.cuecard{background:#FFFBEB;border:1px solid #FDE68A;border-radius:12px;padding:1.35rem 1.45rem;margin-bottom:1.15rem}
+.cuecard h3{font-size:.91rem;font-weight:600;margin-bottom:.55rem;color:#92400E}
+.cuecard li{margin-bottom:.32rem;font-size:.91rem;line-height:1.5;color:var(--navy)}
+.cuecard ul{padding-left:1.1rem}
+.tts{display:inline-flex;align-items:center;gap:5px;padding:4px 11px;border-radius:7px;font-size:.78rem;font-weight:500;cursor:pointer;border:1px solid var(--border);background:var(--white);color:var(--slate);transition:all .18s;margin-bottom:.85rem}
+.tts:hover,.tts.on{border-color:var(--teal);color:var(--teal)}
+.tts.on{background:var(--teal-pale)}
+.prep{background:var(--amber-pale);border:1px solid #FDE68A;border-radius:10px;padding:.95rem 1.2rem;display:flex;align-items:center;gap:.9rem;margin-bottom:1.35rem}
+.prep-cnt{font-size:1.55rem;font-weight:600;color:#B45309;font-variant-numeric:tabular-nums;min-width:50px}
+.prep-lbl{font-size:.82rem;color:#92400E;line-height:1.5}
+.rec-section{margin-top:1.35rem}
+.rec-hint{font-size:.81rem;color:var(--slate);margin-bottom:.65rem}
+.rec-row{display:flex;align-items:center;gap:.9rem;flex-wrap:wrap}
+.rbtn{width:50px;height:50px;border-radius:50%;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .18s;flex-shrink:0}
+.rstart{background:var(--red)}.rstart:hover{background:#dc2626;transform:scale(1.06)}
+.rstop{background:#1F2937}.rstop:hover{background:#111827;transform:scale(1.06)}
+.rstatus{display:flex;align-items:center;gap:7px;font-size:.86rem;color:var(--slate)}
+.rdot{width:9px;height:9px;border-radius:50%;background:var(--slate-light);flex-shrink:0}
+.rdot.live{background:var(--red);animation:blink 1s infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.2}}
+.rtime{font-variant-numeric:tabular-nums;font-weight:500;color:var(--navy);min-width:32px}
+canvas.wv{width:100%;height:50px;border-radius:9px;background:var(--off);border:1px solid var(--border);display:block;margin-top:.85rem}
+.awrap{margin-top:.85rem;padding:.65rem .95rem;background:var(--off);border:1px solid var(--border);border-radius:9px;display:none}
+.awrap.show{display:block}
+.albl{font-size:.76rem;color:var(--slate);margin-bottom:4px;display:flex;align-items:center;gap:5px}
+audio{width:100%;outline:none;margin-top:2px}
+.qnav{display:flex;justify-content:space-between;align-items:center;margin-top:1.7rem;padding-top:1.35rem;border-top:1px solid var(--border)}
+.sgrid{display:grid;grid-template-columns:1fr 1fr;gap:.85rem;margin:1.2rem 0}
+.sitem{background:var(--off);border-radius:10px;padding:.85rem 1rem}
+.skey{font-size:.7rem;color:var(--slate);text-transform:uppercase;letter-spacing:.05em;margin-bottom:3px}
+.sval{font-size:.91rem;font-weight:500}
+.rrow{display:flex;align-items:center;justify-content:space-between;padding:.52rem 0;border-bottom:1px solid var(--border);font-size:.86rem}
+.rrow:last-child{border-bottom:none}
+.rok{color:var(--green);font-weight:500}
+.rmiss{color:var(--slate)}
+.urow{display:flex;align-items:center;gap:9px;padding:.52rem 0;border-bottom:1px solid var(--border);font-size:.86rem}
+.urow:last-child{border-bottom:none}
+.uico{width:21px;height:21px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.uname{flex:1}
+.ust{font-size:.76rem;color:var(--slate)}
+@keyframes spin{from{transform:rotate(0)}to{transform:rotate(360deg)}}
+.spinning{animation:spin 1s linear infinite}
+.ebox{border-radius:10px;padding:.85rem 1.05rem;font-size:.85rem;margin-top:1rem}
+.si-icon{width:66px;height:66px;border-radius:50%;background:#DCFCE7;display:flex;align-items:center;justify-content:center;margin:0 auto 1.4rem}
+@media(max-width:560px){.main{padding:1.2rem 1rem 3.5rem}.card{padding:1.35rem}.h1{font-size:1.35rem}.sgrid{grid-template-columns:1fr}.pills{display:none}}
+</style>
+</head>
+<body>
+
+<header class="hdr">
+  <div class="logo"><div class="logo-dot"></div>IELTS Speaking Test</div>
+  <div class="pills">
+    <span class="pill active" id="pl0">Register</span>
+    <span class="pill" id="pl1">Part 1</span>
+    <span class="pill" id="pl2">Part 2</span>
+    <span class="pill" id="pl3">Part 3</span>
+    <span class="pill" id="pl4">Submit</span>
+  </div>
+</header>
+
+<main class="main">
+
+  <!-- REGISTRATION -->
+  <div class="screen active" id="s0">
+    <div class="card">
+      <div class="eyebrow">Before you begin</div>
+      <div class="h1">Student Registration</div>
+      <div class="sub">Fill in your details before starting the test. Your recordings will be sent to your teacher automatically.</div>
+      <div class="fg"><label>Full Name</label><input type="text" id="rn" placeholder="e.g. Amina Hassan" autocomplete="name"><p class="ferr" id="en">Please enter your full name.</p></div>
+      <div class="fg"><label>Phone Number</label><input type="tel" id="rp" placeholder="e.g. +61 412 345 678" autocomplete="tel"><p class="ferr" id="ep">Please enter a valid phone number.</p></div>
+      <div class="fg"><label>Email Address</label><input type="email" id="re" placeholder="e.g. amina@example.com" autocomplete="email"><p class="ferr" id="ee">Please enter a valid email address.</p></div>
+      <div style="margin-top:1.9rem">
+        <button class="btn btn-p" onclick="reg()">Begin Test <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg></button>
+      </div>
+    </div>
+  </div>
+
+  <!-- PART 1 -->
+  <div class="screen" id="s1">
+    <div class="card">
+      <span class="badge b1"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>Part 1 — Introduction</span>
+      <div class="prog-row"><span class="prog-label">Question <span id="p1n">1</span> of 4</span><div class="prog-track"><div class="prog-fill" id="p1pf" style="width:25%"></div></div></div>
+      <div class="qbox"><div class="qnum">Question <span id="p1qn">1</span></div><div class="qtext" id="p1q"></div></div>
+      <button class="tts" id="tts1" onclick="speak(1)"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></svg>Read question aloud</button>
+      <div class="rec-section">
+        <div class="rec-hint">Record your answer — aim for 1–2 minutes:</div>
+        <div class="rec-row">
+          <button class="rbtn rstart" id="p1rs" onclick="startRec(1)" title="Start"><svg width="15" height="15" viewBox="0 0 24 24"><circle cx="12" cy="12" r="6" fill="white"/></svg></button>
+          <button class="rbtn rstop" id="p1rp" onclick="stopRec(1)" title="Stop" style="display:none"><svg width="13" height="13" viewBox="0 0 24 24"><rect x="6" y="6" width="12" height="12" rx="2" fill="white"/></svg></button>
+          <div class="rstatus"><div class="rdot" id="p1d"></div><span id="p1lb">Press to start</span><span class="rtime" id="p1tm"></span></div>
+        </div>
+        <canvas class="wv" id="p1wv"></canvas>
+        <div class="awrap" id="p1aw"><div class="albl"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>Your recording — re-record anytime</div><audio id="p1au" controls></audio></div>
+      </div>
+      <div class="qnav">
+        <button class="btn btn-o btn-sm" onclick="p1b()" id="p1pb" style="visibility:hidden">← Previous</button>
+        <button class="btn btn-p btn-sm" onclick="p1f()" id="p1fb">Next →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- PART 2 -->
+  <div class="screen" id="s2">
+    <div class="card">
+      <span class="badge b2"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>Part 2 — Long Turn</span>
+      <div class="qbox amber"><div class="qnum">Task Card</div><div class="qtext" id="p2q"></div></div>
+      <div class="cuecard" id="p2cc"></div>
+      <button class="tts" id="tts2" onclick="speak(2)"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>Read task aloud</button>
+      <div class="prep"><div class="prep-cnt" id="p2cnt">1:00</div><div class="prep-lbl"><strong>Preparation time</strong><br>Plan your talk. Recording starts when the timer ends — or press start early.</div></div>
+      <div class="rec-section">
+        <div class="rec-hint">Speak for 1–2 minutes on the topic:</div>
+        <div class="rec-row">
+          <button class="rbtn rstart" id="p2rs" onclick="startRec(2)" title="Start"><svg width="15" height="15" viewBox="0 0 24 24"><circle cx="12" cy="12" r="6" fill="white"/></svg></button>
+          <button class="rbtn rstop" id="p2rp" onclick="stopRec(2)" title="Stop" style="display:none"><svg width="13" height="13" viewBox="0 0 24 24"><rect x="6" y="6" width="12" height="12" rx="2" fill="white"/></svg></button>
+          <div class="rstatus"><div class="rdot" id="p2d"></div><span id="p2lb">Press to start</span><span class="rtime" id="p2tm"></span></div>
+        </div>
+        <canvas class="wv" id="p2wv"></canvas>
+        <div class="awrap" id="p2aw"><div class="albl"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>Your recording — re-record anytime</div><audio id="p2au" controls></audio></div>
+      </div>
+      <div class="qnav">
+        <button class="btn btn-o btn-sm" onclick="goTo(1)">← Back to Part 1</button>
+        <button class="btn btn-p btn-sm" onclick="goPart3()">Continue to Part 3 →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- PART 3 -->
+  <div class="screen" id="s3">
+    <div class="card">
+      <span class="badge b3"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>Part 3 — Discussion</span>
+      <div class="prog-row"><span class="prog-label">Question <span id="p3n">1</span> of 3</span><div class="prog-track"><div class="prog-fill" id="p3pf" style="width:33%"></div></div></div>
+      <div class="qbox purple"><div class="qnum">Discussion Question <span id="p3qn">1</span></div><div class="qtext" id="p3q"></div></div>
+      <button class="tts" id="tts3" onclick="speak(3)"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>Read question aloud</button>
+      <div class="rec-section">
+        <div class="rec-hint">Record your answer — aim for 2–3 minutes:</div>
+        <div class="rec-row">
+          <button class="rbtn rstart" id="p3rs" onclick="startRec(3)" title="Start"><svg width="15" height="15" viewBox="0 0 24 24"><circle cx="12" cy="12" r="6" fill="white"/></svg></button>
+          <button class="rbtn rstop" id="p3rp" onclick="stopRec(3)" title="Stop" style="display:none"><svg width="13" height="13" viewBox="0 0 24 24"><rect x="6" y="6" width="12" height="12" rx="2" fill="white"/></svg></button>
+          <div class="rstatus"><div class="rdot" id="p3d"></div><span id="p3lb">Press to start</span><span class="rtime" id="p3tm"></span></div>
+        </div>
+        <canvas class="wv" id="p3wv"></canvas>
+        <div class="awrap" id="p3aw"><div class="albl"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>Your recording — re-record anytime</div><audio id="p3au" controls></audio></div>
+      </div>
+      <div class="qnav">
+        <button class="btn btn-o btn-sm" onclick="p3b()" id="p3pb" style="visibility:hidden">← Previous</button>
+        <button class="btn btn-p btn-sm" onclick="p3f()" id="p3fb">Next →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- SUBMIT -->
+  <div class="screen" id="s4">
+    <div class="card">
+      <div class="eyebrow">Final Step</div>
+      <div class="h1">Submit Your Test</div>
+      <div class="sub">Review your recordings, then submit — your answers will be sent directly to your teacher.</div>
+      <div class="sgrid">
+        <div class="sitem"><div class="skey">Name</div><div class="sval" id="smn">—</div></div>
+        <div class="sitem"><div class="skey">Email</div><div class="sval" id="sme">—</div></div>
+        <div class="sitem"><div class="skey">Phone</div><div class="sval" id="smp">—</div></div>
+        <div class="sitem"><div class="skey">Completed</div><div class="sval" id="smd">—</div></div>
+      </div>
+      <div id="rsum" style="margin-bottom:1.4rem"></div>
+      <div id="sz"><button class="btn btn-p" onclick="doSubmit()"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="16 16 12 12 8 16"/><line x1="12" y1="12" x2="12" y2="21"/><path d="M20.39 18.39A5 5 0 0 0 18 9h-1.26A8 8 0 1 0 3 16.3"/></svg>Submit to Teacher</button></div>
+      <div id="uz" style="display:none"><div style="font-size:.84rem;font-weight:500;margin-bottom:.7rem">Uploading your recordings…</div><div id="urows"></div><div id="uerr" style="display:none"></div></div>
+    </div>
+  </div>
+
+  <!-- SUCCESS -->
+  <div class="screen" id="s5">
+    <div class="card" style="text-align:center;padding:2.8rem 2rem">
+      <div class="si-icon"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#16A34A" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></div>
+      <div class="h1" style="margin-bottom:.45rem">Test Submitted!</div>
+      <p style="color:var(--slate);line-height:1.7;max-width:420px;margin:0 auto 1.9rem;font-size:.93rem">Your recordings have been sent to your teacher. Well done for completing the speaking test — you'll receive feedback soon.</p>
+      <button class="btn btn-o" onclick="location.reload()">Take Another Test</button>
+    </div>
+  </div>
+
+</main>
+
+<script>
+// ══════════════════════════════════════════════
+//  TEACHER: replace with your Apps Script URL
+const SCRIPT_URL = 'YOUR_APPS_SCRIPT_URL_HERE';
+// ══════════════════════════════════════════════
+
+const Q1 = [
+  "Can you tell me your name and where you are from?",
+  "Do you work or are you a student? What do you enjoy most about it?",
+  "Let's talk about your hometown. What is it like to live there?",
+  "How do you usually spend your weekends?"
+];
+const Q2 = {
+  prompt: "Describe an interesting place you have visited.",
+  pts: ["Where the place is and when you went there","What you did there and who you were with","What you found most interesting about it","Why you would recommend it to others"]
+};
+const Q3 = [
+  "In general, do you think tourism is beneficial or harmful to local communities? Why?",
+  "How has the way people travel changed over the past few decades, and what has driven those changes?",
+  "Some people argue that virtual reality could replace physical travel in the future. To what extent do you agree?"
+];
+
+const KEYS=['p1_0','p1_1','p1_2','p1_3','p2','p3_0','p3_1','p3_2'];
+const LBLS=['Part 1 – Q1','Part 1 – Q2','Part 1 – Q3','Part 1 – Q4','Part 2 – Long Turn','Part 3 – Q1','Part 3 – Q2','Part 3 – Q3'];
+
+const ST={student:{},i1:0,i3:0,blobs:{},urls:{},mr:{},chunks:{},clocks:{},rafs:{},ans:{},actxs:{},pt:null};
+
+function goTo(n){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.getElementById('s'+n).classList.add('active');
+  window.scrollTo(0,0);
+  for(let i=0;i<5;i++){
+    const p=document.getElementById('pl'+i);
+    p.className='pill';
+    if(i<n) p.classList.add('done');
+    if(i===Math.min(n,4)) p.classList.add('active');
+  }
+}
+
+// ── Registration ─────────────────────────────
+function reg(){
+  const name=g('rn').value.trim(),phone=g('rp').value.trim(),email=g('re').value.trim();
+  const eRe=/^[^\s@]+@[^\s@]+\.[^\s@]+$/,pRe=/^[+\d][\d\s\-(). ]{5,}$/;
+  let ok=true;
+  [[name,!!name,'rn','en'],[phone,pRe.test(phone),'rp','ep'],[email,eRe.test(email),'re','ee']].forEach(([_,v,inp,err])=>{
+    g(inp).classList.toggle('err',!v);g(err).style.display=v?'none':'block';if(!v)ok=false;
+  });
+  if(!ok)return;
+  ST.student={name,phone,email,ts:new Date().toISOString()};
+  loadQ1(0);goTo(1);setTimeout(()=>speak(1),700);
+}
+
+// ── Part 1 ───────────────────────────────────
+function loadQ1(i){
+  ST.i1=i;
+  g('p1n').textContent=g('p1qn').textContent=i+1;
+  g('p1q').textContent=Q1[i];
+  g('p1pf').style.width=((i+1)/4*100)+'%';
+  g('p1pb').style.visibility=i?'visible':'hidden';
+  g('p1fb').textContent=i===3?'Continue to Part 2 →':'Next →';
+  refreshAudio(1,'p1_'+i);resetUI(1);
+}
+function p1b(){if(ST.i1>0)loadQ1(ST.i1-1)}
+function p1f(){ST.i1<3?loadQ1(ST.i1+1):goPart2()}
+
+// ── Part 2 ───────────────────────────────────
+function goPart2(){
+  g('p2q').textContent=Q2.prompt;
+  g('p2cc').innerHTML='<h3>You should say:</h3><ul>'+Q2.pts.map(p=>`<li>${p}</li>`).join('')+'</ul>';
+  refreshAudio(2,'p2');resetUI(2);goTo(2);startPrep();setTimeout(()=>speak(2),700);
+}
+function startPrep(){
+  let s=60;const el=g('p2cnt');
+  if(ST.pt)clearInterval(ST.pt);
+  ST.pt=setInterval(()=>{s--;const m=Math.floor(s/60),sec=s%60;el.textContent=m+':'+(sec<10?'0':'')+sec;if(s<=0){clearInterval(ST.pt);startRec(2)}},1000);
+}
+function goPart3(){if(ST.pt)clearInterval(ST.pt);sil(2);loadQ3(0);goTo(3);setTimeout(()=>speak(3),700)}
+
+// ── Part 3 ───────────────────────────────────
+function loadQ3(i){
+  ST.i3=i;
+  g('p3n').textContent=g('p3qn').textContent=i+1;
+  g('p3q').textContent=Q3[i];
+  g('p3pf').style.width=((i+1)/3*100)+'%';
+  g('p3pb').style.visibility=i?'visible':'hidden';
+  g('p3fb').textContent=i===2?'Review & Submit →':'Next →';
+  refreshAudio(3,'p3_'+i);resetUI(3);
+}
+function p3b(){if(ST.i3>0)loadQ3(ST.i3-1)}
+function p3f(){ST.i3<2?loadQ3(ST.i3+1):goSubmit()}
+
+// ── Submit screen ─────────────────────────────
+function goSubmit(){
+  sil(3);
+  g('smn').textContent=ST.student.name;
+  g('sme').textContent=ST.student.email;
+  g('smp').textContent=ST.student.phone;
+  g('smd').textContent=new Date().toLocaleString();
+  g('rsum').innerHTML=KEYS.map((k,i)=>`<div class="rrow"><span>${LBLS[i]}</span>${ST.blobs[k]?'<span class="rok">✓ Recorded</span>':'<span class="rmiss">Not recorded</span>'}</div>`).join('');
+  goTo(4);
+}
+
+// ── TTS ───────────────────────────────────────
+window.speechSynthesis&&window.speechSynthesis.getVoices();
+function speak(part){
+  if(!window.speechSynthesis)return;
+  const btn=g('tts'+part);
+  if(speechSynthesis.speaking){speechSynthesis.cancel();btn.classList.remove('on');return}
+  const text=part===1?Q1[ST.i1]:part===2?'Your task: '+Q2.prompt+'. You should say: '+Q2.pts.join('. '):Q3[ST.i3];
+  const u=new SpeechSynthesisUtterance(text);
+  u.rate=0.92;u.pitch=1;
+  const v=speechSynthesis.getVoices().find(v=>v.lang.startsWith('en-'));
+  if(v)u.voice=v;
+  u.onstart=()=>{btn.classList.add('on');btn.innerHTML='<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg> Stop reading'};
+  u.onend=()=>{btn.classList.remove('on');btn.innerHTML='<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/></svg> Read question aloud'};
+  speechSynthesis.speak(u);
+}
+
+// ── Recording ─────────────────────────────────
+function rk(p){return p===1?'p1_'+ST.i1:p===2?'p2':'p3_'+ST.i3}
+function g(id){return document.getElementById(id)}
+function resetUI(p){
+  g('p'+p+'rs').style.display='flex';g('p'+p+'rp').style.display='none';
+  g('p'+p+'d').classList.remove('live');g('p'+p+'lb').textContent='Press to start';g('p'+p+'tm').textContent='';
+}
+function refreshAudio(p,key){
+  const aw=g('p'+p+'aw'),au=g('p'+p+'au');
+  if(!aw||!au)return;
+  if(ST.urls[key]){au.src=ST.urls[key];aw.classList.add('show')}else{aw.classList.remove('show');au.src=''}
+}
+
+async function startRec(p){
+  sil(p);
+  try{
+    const stream=await navigator.mediaDevices.getUserMedia({audio:true});
+    const ac=new(window.AudioContext||window.webkitAudioContext)();
+    ST.actxs[p]=ac;
+    const src=ac.createMediaStreamSource(stream);
+    const an=ac.createAnalyser();an.fftSize=256;src.connect(an);ST.ans[p]=an;
+    const mr=new MediaRecorder(stream);ST.mr[p]=mr;ST.chunks[p]=[];
+    mr.ondataavailable=e=>ST.chunks[p].push(e.data);
+    mr.onstop=()=>{
+      const blob=new Blob(ST.chunks[p],{type:'audio/webm'});
+      const key=rk(p);ST.blobs[key]=blob;
+      if(ST.urls[key])URL.revokeObjectURL(ST.urls[key]);
+      ST.urls[key]=URL.createObjectURL(blob);
+      refreshAudio(p,key);stream.getTracks().forEach(t=>t.stop());
+    };
+    mr.start();
+    g('p'+p+'rs').style.display='none';g('p'+p+'rp').style.display='flex';
+    g('p'+p+'d').classList.add('live');g('p'+p+'lb').textContent='Recording…';
+    let sec=0;if(ST.clocks[p])clearInterval(ST.clocks[p]);
+    ST.clocks[p]=setInterval(()=>{sec++;const m=Math.floor(sec/60),s=sec%60;g('p'+p+'tm').textContent=m+':'+(s<10?'0':'')+s},1000);
+    drawWave(p);
+  }catch(e){alert('Microphone access is required. Please allow microphone access and try again.')}
+}
+function stopRec(p){
+  const mr=ST.mr[p];if(mr&&mr.state!=='inactive')mr.stop();
+  if(ST.clocks[p])clearInterval(ST.clocks[p]);
+  if(ST.rafs[p])cancelAnimationFrame(ST.rafs[p]);
+  if(ST.actxs[p])ST.actxs[p].close().catch(()=>{});
+  g('p'+p+'rs').style.display='flex';g('p'+p+'rp').style.display='none';
+  g('p'+p+'d').classList.remove('live');g('p'+p+'lb').textContent='Saved — re-record if needed';
+  idleWave(p);
+}
+function sil(p){const mr=ST.mr[p];if(mr&&mr.state!=='inactive')stopRec(p)}
+
+// ── Waveform ──────────────────────────────────
+function drawWave(p){
+  const c=g('p'+p+'wv');if(!c)return;
+  c.width=c.offsetWidth||400;c.height=c.offsetHeight||50;
+  const ctx=c.getContext('2d'),an=ST.ans[p];
+  if(!an){idleWave(p);return}
+  const buf=new Uint8Array(an.frequencyBinCount),W=c.width,H=c.height;
+  function frame(){
+    ST.rafs[p]=requestAnimationFrame(frame);an.getByteTimeDomainData(buf);
+    ctx.fillStyle='#F8FAFF';ctx.fillRect(0,0,W,H);
+    ctx.strokeStyle='#00B4A6';ctx.lineWidth=1.8;ctx.beginPath();
+    const sw=W/buf.length;let x=0;
+    for(let i=0;i<buf.length;i++){const y=(buf[i]/128)*H/2;i?ctx.lineTo(x,y):ctx.moveTo(x,y);x+=sw}
+    ctx.lineTo(W,H/2);ctx.stroke();
+  }
+  frame();
+}
+function idleWave(p){
+  const c=g('p'+p+'wv');if(!c)return;
+  c.width=c.offsetWidth||400;c.height=c.offsetHeight||50;
+  const ctx=c.getContext('2d');
+  ctx.fillStyle='#F8FAFF';ctx.fillRect(0,0,c.width,c.height);
+  ctx.strokeStyle='#E2E8F0';ctx.lineWidth=1.2;ctx.beginPath();ctx.moveTo(0,c.height/2);ctx.lineTo(c.width,c.height/2);ctx.stroke();
+}
+window.addEventListener('load',()=>setTimeout(()=>[1,2,3].forEach(idleWave),150));
+
+// ── Upload ────────────────────────────────────
+async function doSubmit(){
+  g('sz').style.display='none';g('uz').style.display='block';
+  const done=KEYS.filter(k=>ST.blobs[k]);
+  if(!done.length){showErr('No recordings found. Please go back and record your answers.');return}
+  const ts=new Date().toISOString().replace(/[:.]/g,'-').slice(0,19);
+  const safe=ST.student.name.replace(/\s+/g,'_').replace(/[^a-zA-Z0-9_]/g,'');
+  g('urows').innerHTML=done.map(k=>`<div class="urow" id="ur${k}"><div class="uico" id="ui${k}" style="background:#F1F5F9"><svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="#94A3B8" stroke-width="2.5"><circle cx="12" cy="12" r="10"/></svg></div><span class="uname">${LBLS[KEYS.indexOf(k)]}</span><span class="ust" id="us${k}">Waiting…</span></div>`).join('');
+  const configured=SCRIPT_URL&&SCRIPT_URL!=='YOUR_APPS_SCRIPT_URL_HERE';
+  if(!configured){
+    for(const k of done){
+      setSt(k,'uploading','Preparing…');await wait(300);
+      const a=document.createElement('a');a.href=ST.urls[k];
+      a.download=`${safe}_${LBLS[KEYS.indexOf(k)].replace(/ – /g,'_').replace(/ /g,'')}_${ts}.webm`;
+      a.click();await wait(350);setSt(k,'done','Downloaded');
+    }
+    showErr('Note: Apps Script URL not set — files downloaded to your device instead.','#92400E','#FEF3C7','#FDE68A');
+    setTimeout(()=>goTo(5),1000);return;
+  }
+  for(const k of done){
+    setSt(k,'uploading','Uploading…');
+    const fname=`${safe}_${LBLS[KEYS.indexOf(k)].replace(/ – /g,'_').replace(/ /g,'')}_${ts}.webm`;
+    try{
+      const b64=await toB64(ST.blobs[k]);
+      const resp=await fetch(SCRIPT_URL,{method:'POST',body:JSON.stringify({studentName:ST.student.name,studentEmail:ST.student.email,studentPhone:ST.student.phone,submittedAt:ST.student.ts,recordingKey:k,filename:fname,mimeType:'audio/webm',data:b64})});
+      const json=await resp.json();
+      if(json.success)setSt(k,'done','Uploaded ✓');else throw new Error(json.error||'Server error');
+    }catch(err){setSt(k,'fail','Failed')}
+  }
+  const failed=done.some(k=>g('us'+k).textContent==='Failed');
+  if(failed)showErr('Some files failed to upload. Please take a screenshot and contact your teacher.');
+  else setTimeout(()=>goTo(5),600);
+}
+const ICO={
+  uploading:'<svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="#00B4A6" stroke-width="2.5"><polyline points="16 16 12 12 8 16"/><line x1="12" y1="12" x2="12" y2="21"/><path d="M20.39 18.39A5 5 0 0 0 18 9h-1.26A8 8 0 1 0 3 16.3"/></svg>',
+  done:'<svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="#16A34A" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>',
+  fail:'<svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="#EF4444" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>'
+};
+const BGS={uploading:'var(--teal-pale)',done:'#DCFCE7',fail:'#FEE2E2'};
+function setSt(k,st,msg){
+  const ico=g('ui'+k),stat=g('us'+k);
+  if(ico){ico.innerHTML=ICO[st]||'';ico.style.background=BGS[st]||'#F1F5F9';st==='uploading'?ico.classList.add('spinning'):ico.classList.remove('spinning')}
+  if(stat)stat.textContent=msg;
+}
+function showErr(msg,col='#991B1B',bg='#FEF2F2',bdr='#FECACA'){
+  const el=g('uerr');el.style.display='block';Object.assign(el.style,{background:bg,borderColor:bdr,color:col,border:'1px solid',borderRadius:'10px',padding:'.85rem 1.05rem',fontSize:'.84rem',marginTop:'1rem'});el.textContent=msg;
+}
+function toB64(blob){return new Promise((res,rej)=>{const r=new FileReader();r.onload=()=>res(r.result.split(',')[1]);r.onerror=rej;r.readAsDataURL(blob)})}
+function wait(ms){return new Promise(r=>setTimeout(r,ms))}
+</script>
+</body>
+</html>
