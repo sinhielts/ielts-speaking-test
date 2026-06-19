@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IELTS Speaking Portal - Auto Save</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-50 font-sans min-h-screen flex flex-col justify-between">
+
+    <header class="bg-blue-600 text-white shadow-md p-4">
+        <div class="max-w-4xl mx-auto flex justify-between items-center">
+            <h1 class="text-xl font-bold tracking-wide">IELTS Cloud Cloud-Sync Portal</h1>
+            <span id="progress-text" class="text-sm bg-blue-700 px-3 py-1 rounded-full font-medium">Setup</span>
+        </div>
+    </header>
+
+    <main class="max-w-3xl w-full mx-auto p-6 flex-grow flex flex-col justify-center">
+        
+        <div id="setup-screen" class="bg-white rounded-2xl shadow-sm border border-gray-100 p-8 text-center space-y-6">
+            <h2 class="text-2xl font-bold text-gray-800">Student Sign-In</h2>
+            <div class="max-w-xs mx-auto text-left space-y-2">
+                <label class="text-sm font-medium text-gray-600 block">Enter Your Full Name:</label>
+                <input type="text" id="student-name" placeholder="e.g. John Doe" class="w-full border border-gray-300 rounded-xl px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-blue-500">
+            </div>
+            <button id="btn-start-test" class="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-8 py-3 rounded-xl shadow-sm transition-all">
+                Begin Test
+            </button>
+        </div>
+
+        <div id="test-screen" class="hidden bg-white rounded-2xl shadow-sm border border-gray-100 p-8 space-y-8">
+            <div class="space-y-3 text-center border-b border-gray-100 pb-6">
+                <span id="part-tag" class="text-xs uppercase tracking-widest font-bold text-blue-600 bg-blue-50 px-2.5 py-1 rounded-md">Part 1</span>
+                <h3 id="question-text" class="text-xl font-medium text-gray-800 max-w-xl mx-auto leading-relaxed">Loading...</h3>
+                <button id="btn-replay" class="text-sm text-blue-500 hover:text-blue-600 mt-2">🔊 Replay Prompt</button>
+            </div>
+
+            <div class="flex flex-col items-center justify-center space-y-4">
+                <div id="recording-status" class="text-sm font-medium text-gray-500 flex items-center space-x-2">
+                    <span id="status-dot" class="w-2.5 h-2.5 bg-gray-400 rounded-full"></span>
+                    <span id="status-text">Ready</span>
+                </div>
+                
+                <div class="relative flex items-center justify-center">
+                    <button id="btn-record" class="bg-gray-800 hover:bg-black text-white w-20 h-20 rounded-full flex items-center justify-center shadow-lg transition-all transform hover:scale-105 z-10">
+                        <svg id="icon-mic" class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z"></path></svg>
+                        <svg id="icon-stop" class="w-8 h-8 text-white hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 10a1 1 0 011 1v2a1 1 0 01-1 1H9a1 1 0 01-1-1v-2a1 1 0 011-1h2z"></path></svg>
+                    </button>
+                    <div id="pulse-ring" class="absolute w-20 h-20 bg-red-400 rounded-full opacity-50 animate-ping hidden"></div>
+                </div>
+                <div id="timer-display" class="text-2xl font-mono font-semibold text-gray-700 hidden">00:00</div>
+            </div>
+
+            <div class="flex justify-between items-center border-t border-gray-100 pt-6">
+                <div class="w-24"></div>
+                <button id="btn-next" disabled class="bg-gray-200 text-gray-400 font-semibold px-6 py-2.5 rounded-xl cursor-not-allowed transition-all inline-flex items-center space-x-2">
+                    <span id="btn-next-text">Next Question</span>
+                </button>
+            </div>
+        </div>
+
+        <div id="end-screen" class="hidden bg-white rounded-2xl shadow-sm border border-gray-100 p-8 text-center space-y-6">
+            <div id="sync-loading" class="space-y-4">
+                <div class="w-12 h-12 border-4 border-blue-600 border-t-transparent rounded-full animate-spin mx-auto"></div>
+                <h2 class="text-2xl font-bold text-gray-800">Saving to Google Drive...</h2>
+                <p class="text-gray-500 text-sm">Please do not close this window while we sync your audio files with your teacher's dashboard account folder.</p>
+            </div>
+            
+            <div id="sync-success" class="hidden space-y-4">
+                <div class="inline-flex bg-green-50 text-green-500 p-4 rounded-full w-16 h-16 mx-auto">
+                    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                </div>
+                <h2 class="text-2xl font-bold text-gray-800">All Answers Saved!</h2>
+                <p class="text-gray-600 max-w-sm mx-auto">Your speaking responses have been synced directly to Google Drive. Your teacher has been notified.</p>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // --- CONFIGURATION ---
+        const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbwG5sYS6ghig7CKDtlEPOSNfLwgsIGRbX_E_5d8x0KsLXrVZ9ObZLs8bWE49H1nPBP-9A/exec"; 
+        
+        const examData = [
+            { id: "Q1_Part1", part: "Part 1: Introduction", text: "What forms of transport do you occasionally use for traveling, and why?" },
+            { id: "Q2_Part1", part: "Part 1: Introduction", text: "Do you prefer traveling alone or with your family?" }
+        ];
+
+        let currentIdx = 0;
+        let mediaRecorder = null;
+        let audioChunks = [];
+        let studentName = "Unknown_Student";
+        let recordedAnswers = []; 
+        let timerInterval = null;
+        let secondsElapsed = 0;
+
+        // Element selection mappings
+        const setupScreen = document.getElementById('setup-screen');
+        const testScreen = document.getElementById('test-screen');
+        const endScreen = document.getElementById('end-screen');
+        const btnStartTest = document.getElementById('btn-start-test');
+        const btnRecord = document.getElementById('btn-record');
+        const btnNext = document.getElementById('btn-next');
+        const btnNextText = document.getElementById('btn-next-text');
+        const btnReplay = document.getElementById('btn-replay');
+        
+        const questionText = document.getElementById('question-text');
+        const partTag = document.getElementById('part-tag');
+        const progressText = document.getElementById('progress-text');
+        const timerDisplay = document.getElementById('timer-display');
+        const statusText = document.getElementById('status-text');
+        const statusDot = document.getElementById('status-dot');
+        const pulseRing = document.getElementById('pulse-ring');
+        const iconMic = document.getElementById('icon-mic');
+        const iconStop = document.getElementById('icon-stop');
+
+        function speakQuestion(text) {
+            window.speechSynthesis.cancel();
+            const utterance = new SpeechSynthesisUtterance(text);
+            utterance.lang = 'en-GB';
+            utterance.rate = 0.95;
+            window.speechSynthesis.speak(utterance);
+        }
+
+        btnStartTest.addEventListener('click', async () => {
+            const inputName = document.getElementById('student-name').value.trim();
+            if(!inputName) { alert("Please input your name first."); return; }
+            studentName = inputName.replace(/[^a-zA-Z0-9]/g, "_"); // sanitize naming spaces
+
+            try {
+                const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+                mediaRecorder = new MediaRecorder(stream);
+                
+                mediaRecorder.ondataavailable = e => { if (e.data.size > 0) audioChunks.push(e.data); };
+                mediaRecorder.onstop = () => {
+                    const audioBlob = new Blob(audioChunks, { type: 'audio/webm' });
+                    recordedAnswers.push({ id: examData[currentIdx].id, blob: audioBlob });
+                    enableNextButton();
+                };
+
+                setupScreen.classList.add('hidden');
+                testScreen.classList.remove('hidden');
+                loadQuestion(0);
+            } catch (err) {
+                alert("Microphone configuration required.");
+            }
+        });
+
+        function loadQuestion(index) {
+            currentIdx = index;
+            audioChunks = [];
+            disableNextButton();
+            resetTimer();
+
+            const q = examData[index];
+            partTag.innerText = q.part;
+            questionText.innerText = q.text;
+            progressText.innerText = `Question ${index + 1} of ${examData.length}`;
+            btnNextText.innerText = (index === examData.length - 1) ? "Finish Test & Sync" : "Next Question";
+            
+            setTimeout(() => { speakQuestion(q.text); }, 600);
+        }
+
+        btnReplay.addEventListener('click', () => speakQuestion(examData[currentIdx].text));
+
+        btnRecord.addEventListener('click', () => {
+            if (mediaRecorder.state === "inactive") {
+                audioChunks = []; window.speechSynthesis.cancel();
+                mediaRecorder.start(); startTimer();
+                btnRecord.className = "bg-red-600 hover:bg-red-700 text-white w-20 h-20 rounded-full flex items-center justify-center shadow-lg transform scale-105 z-10";
+                iconMic.classList.add('hidden'); iconStop.classList.remove('hidden'); pulseRing.classList.remove('hidden'); timerDisplay.classList.remove('hidden');
+                statusText.innerText = "Recording..."; statusDot.className = "w-2.5 h-2.5 bg-red-500 rounded-full";
+            } else {
+                mediaRecorder.stop(); stopTimer();
+                btnRecord.className = "bg-gray-800 hover:bg-black text-white w-20 h-20 rounded-full flex items-center justify-center shadow-lg z-10";
+                iconStop.classList.add('hidden'); iconMic.classList.remove('hidden'); pulseRing.classList.add('hidden');
+                statusText.innerText = "Captured"; statusDot.className = "w-2.5 h-2.5 bg-green-500 rounded-full";
+            }
+        });
+
+        btnNext.addEventListener('click', () => {
+            if (currentIdx < examData.length - 1) {
+                loadQuestion(currentIdx + 1);
+            } else {
+                testScreen.classList.add('hidden');
+                endScreen.classList.remove('hidden');
+                progressText.innerText = "Syncing Container";
+                uploadAllAnswersToCloud();
+            }
+        });
+
+        // --- CLOUD SHIPPER SUBMISSION CONTROLLER ---
+        async function uploadAllAnswersToCloud() {
+            try {
+                for (let item of recordedAnswers) {
+                    // Convert audio binary block to Base64 string reader array
+                    const base64Data = await new Promise((resolve) => {
+                        const reader = new FileReader();
+                        reader.onloadend = () => resolve(reader.result.split(',')[1]);
+                        reader.readAsDataURL(item.blob);
+                    });
+
+                    // Send individual payloads targeting the Apps Script entry pipeline
+                    const payload = {
+                        student: studentName,
+                        fileName: `${studentName}_${item.id}_${Date.now()}.webm`,
+                        audioData: base64Data
+                    };
+
+                    await fetch(WEB_APP_URL, {
+                        method: "POST",
+                        mode: "no-cors", // Bypasses CORS browser preflight requirements safely for Web Apps
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify(payload)
+                    });
+                }
+                
+                // Show completion UI
+                document.getElementById('sync-loading').classList.add('hidden');
+                document.getElementById('sync-success').classList.remove('hidden');
+                progressText.innerText = "Completed";
+
+            } catch (err) {
+                alert("Upload network pipeline failed. Check web app URL credentials layout configurations.");
+                console.error(err);
+            }
+        }
+
+        function enableNextButton() { btnNext.disabled = false; btnNext.className = "bg-blue-600 text-white hover:bg-blue-700 font-semibold px-6 py-2.5 rounded-xl transition-all"; }
+        function disableNextButton() { btnNext.disabled = true; btnNext.className = "bg-gray-200 text-gray-400 font-semibold px-6 py-2.5 rounded-xl cursor-not-allowed"; statusText.innerText = "Microphone Ready"; statusDot.className="w-2.5 h-2.5 bg-gray-400 rounded-full"; }
+        function startTimer() { secondsElapsed = 0; timerInterval = setInterval(() => { secondsElapsed++; const m = String(Math.floor(secondsElapsed/60)).padStart(2,'0'); const s = String(secondsElapsed%60).padStart(2,'0'); timerDisplay.innerText = `${m}:${s}`; }, 1000); }
+        function stopTimer() { clearInterval(timerInterval); }
+        function resetTimer() { clearInterval(timerInterval); timerDisplay.classList.add('hidden'); timerDisplay.innerText = "00:00"; }
+    </script>
+</body>
+</html>
