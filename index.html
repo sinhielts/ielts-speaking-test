@@ -120,29 +120,22 @@
         // =========================================================================
         // 1. CONFIGURATION: ENDPOINT AND EXAM SPECIFICATION QUESTION BANKS
         // =========================================================================
-        const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbzfRoSb8V2iMihpeHYoYH-mm8wVTp4IkVZ90dRrKB6-bTGA2q5wvsnEBl00X2say7V2KQ/exec"; 
+        const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbxic2JkDbabdp7ik63Y5yQsj7oIIU67i1vm68cAc6KBtk3C0NdJuQi5el3noFiajzmGzQ/exec"; 
         
         const examData = [
-            // --- PART 1: HOME & ACCOMMODATION ---
             { id: "Part1_Accommodation_Q1", part: "Part 1: Home and Accommodation", text: "Do you live in a house or an apartment?" },
             { id: "Part1_Accommodation_Q2", part: "Part 1: Home and Accommodation", text: "How long have you lived there?" },
             { id: "Part1_Accommodation_Q3", part: "Part 1: Home and Accommodation", text: "What do you like most about your home?" },
             { id: "Part1_Accommodation_Q4", part: "Part 1: Home and Accommodation", text: "Is there anything you would like to change about your home?" },
-
-            // --- PART 1: DAILY ROUTINE ---
             { id: "Part1_Routine_Q1", part: "Part 1: Daily Routine", text: "What is your typical day like?" },
             { id: "Part1_Routine_Q2", part: "Part 1: Daily Routine", text: "What part of your day do you enjoy the most?" },
             { id: "Part1_Routine_Q3", part: "Part 1: Daily Routine", text: "Have your daily routines changed in recent years?" },
             { id: "Part1_Routine_Q4", part: "Part 1: Daily Routine", text: "Do you prefer having a routine or being spontaneous?" },
-
-            // --- PART 2: CUE CARD ---
             { 
                 id: "Part2_CueCard_RoleModel", 
                 part: "Part 2: Individual Long Turn", 
                 text: "Describe a person who has influenced you in a positive way.\n\nYou should say:\n• Who this person is\n• How you know this person\n• What influence they have had on you\n\n...and explain why this person has been important in your life.\n\n(You will have 1 minute to prepare and then speak for 1–2 minutes.)" 
             },
-
-            // --- PART 3: INFLUENCE & ROLE MODELS ---
             { id: "Part3_Discussion_Q1", part: "Part 3: Influence and Role Models", text: "What qualities make someone a good role model?" },
             { id: "Part3_Discussion_Q2", part: "Part 3: Influence and Role Models", text: "Do young people today have different role models compared to the past?" },
             { id: "Part3_Discussion_Q3", part: "Part 3: Influence and Role Models", text: "How do celebrities influence people's behavior?" },
@@ -303,6 +296,7 @@
             }
         });
 
+        // FIXED EARLY EXIT CONTROLLER
         btnForceQuit.addEventListener('click', () => {
             if(confirm("Are you sure you want to stop the test early? All answers recorded up to this point will be sent to your instructor.")) {
                 clearInterval(globalTimerInterval);
@@ -312,7 +306,8 @@
         });
 
         function forceStopAndUpload() {
-            if (mediaRecorder && mediaRecorder.state !== "inactive") {
+            // Check if mic is actively recording right now
+            if (mediaRecorder && mediaRecorder.state === "recording") {
                 mediaRecorder.onstop = () => {
                     const audioBlob = new Blob(audioChunks, { type: 'audio/webm' });
                     recordedAnswers[examData[currentIdx].id] = audioBlob;
@@ -321,6 +316,7 @@
                 mediaRecorder.stop();
                 stopTimer();
             } else {
+                // If the mic was completely inactive/idle, bypass mic processing and skip straight to uploading
                 finishExamSequence();
             }
         }
@@ -339,6 +335,15 @@
         // =========================================================================
         async function uploadAllAnswersToCloud() {
             try {
+                // Make sure we have at least one recorded item before running the fetch engine
+                if (Object.keys(recordedAnswers).length === 0) {
+                    document.getElementById('sync-loading').classList.add('hidden');
+                    document.getElementById('sync-success').classList.remove('hidden');
+                    document.getElementById('end-screen-message').innerText = "No recordings were captured to save.";
+                    progressText.innerText = "Exam Closed";
+                    return;
+                }
+
                 for (const questionId in recordedAnswers) {
                     const blob = recordedAnswers[questionId];
                     const base64Data = await new Promise((resolve) => {
