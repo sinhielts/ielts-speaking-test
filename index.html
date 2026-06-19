@@ -3,33 +3,38 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SINH IELTS Speaking Exam Portal</title>
+    <title>IELTS Speaking Exam Portal</title>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-gray-50 font-sans min-h-screen flex flex-col justify-between">
 
-   <header class="bg-blue-600 text-white shadow-md p-4">
+    <header class="bg-blue-600 text-white shadow-md p-4">
         <div class="max-w-4xl mx-auto flex justify-between items-center">
             <div class="flex items-center space-x-3">
-                <img src="logo.png" alt="SINH IELTS Logo" class="h-12 w-12 rounded-lg bg-white p-0.5 object-contain">
+                <img src="https://i.ibb.co/6R0mZqyP/sinh-logo.png" alt="SINH IELTS Logo" class="h-12 w-12 rounded-lg bg-white p-0.5 object-contain">
                 <h1 class="text-xl font-bold tracking-wide hidden sm:block">Official IELTS Speaking Simulation</h1>
             </div>
-            <span id="progress-text" class="text-sm bg-blue-700 px-3 py-1 rounded-full font-medium">Registration</span>
+            <div class="flex items-center space-x-4">
+                <div id="global-clock-container" class="hidden bg-blue-800 px-3 py-1 rounded-full text-sm font-mono font-bold flex items-center space-x-1.5 text-yellow-300 animate-pulse">
+                    <span>⏱️ Total Time Left:</span>
+                    <span id="global-timer">15:00</span>
+                </div>
+                <span id="progress-text" class="text-sm bg-blue-700 px-3 py-1 rounded-full font-medium">Registration</span>
+            </div>
         </div>
     </header>
 
     <main class="max-w-3xl w-full mx-auto p-6 flex-grow flex flex-col justify-center">
         
-     <div id="setup-screen" class="bg-white rounded-2xl shadow-sm border border-gray-100 p-8 text-center space-y-6">
+        <div id="setup-screen" class="bg-white rounded-2xl shadow-sm border border-gray-100 p-8 text-center space-y-6">
             <div class="flex justify-center mb-2">
-                <img src="logo.png" alt="SINH IELTS Logo" class="h-24 w-24 object-contain">
+                <img src="https://i.ibb.co/6R0mZqyP/sinh-logo.png" alt="SINH IELTS Logo" class="h-24 w-24 object-contain">
             </div>
             
             <div class="space-y-2">
                 <h2 class="text-2xl font-bold text-gray-800">IELTS Speaking Component</h2>
-                <p class="text-gray-500 max-w-md mx-auto text-sm">Please fill in your contact information below to register and launch the test engine.</p>
+                <p class="text-gray-500 max-w-md mx-auto text-sm">Please fill in your contact information below to register and launch the test engine. You will have a maximum of 15 minutes to complete all sections.</p>
             </div>
-
             
             <div class="max-w-md mx-auto text-left space-y-4">
                 <div>
@@ -74,250 +79,4 @@
                 </div>
                 
                 <div class="relative flex items-center justify-center">
-                    <button id="btn-record" class="bg-gray-800 hover:bg-black text-white w-20 h-20 rounded-full flex items-center justify-center shadow-lg transition-all transform hover:scale-105 focus:outline-none z-10">
-                        <svg id="icon-mic" class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z"></path></svg>
-                        <svg id="icon-stop" class="w-8 h-8 text-white hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 10a1 1 0 011 1v2a1 1 0 01-1 1H9a1 1 0 01-1-1v-2a1 1 0 011-1h2z"></path></svg>
-                    </button>
-                    <div id="pulse-ring" class="absolute w-20 h-20 bg-red-400 rounded-full opacity-50 animate-ping hidden"></div>
-                </div>
-
-                <div id="timer-display" class="text-2xl font-mono font-semibold text-gray-700 hidden">00:00</div>
-            </div>
-
-            <div class="flex justify-between items-center border-t border-gray-100 pt-6">
-                <div class="w-24"></div> 
-                <button id="btn-next" disabled class="bg-gray-200 text-gray-400 font-semibold px-6 py-2.5 rounded-xl cursor-not-allowed transition-all inline-flex items-center space-x-2">
-                    <span id="btn-next-text">Next Question</span>
-                </button>
-            </div>
-        </div>
-
-        <div id="end-screen" class="hidden bg-white rounded-2xl shadow-sm border border-gray-100 p-8 text-center space-y-6">
-            <div id="sync-loading" class="space-y-4">
-                <div class="w-12 h-12 border-4 border-blue-600 border-t-transparent rounded-full animate-spin mx-auto"></div>
-                <h2 class="text-2xl font-bold text-gray-800">Finalizing Exam Upload...</h2>
-                <p class="text-gray-500 text-sm">Syncing digital audio logs directly to your instructor's processing vault.</p>
-            </div>
-            
-            <div id="sync-success" class="hidden space-y-4">
-                <div class="inline-flex bg-green-50 text-green-500 p-4 rounded-full w-16 h-16 mx-auto">
-                    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-                </div>
-                <h2 class="text-2xl font-bold text-gray-800">Evaluation Finished!</h2>
-                <p class="text-gray-600 max-w-sm mx-auto">Your speaking exam has been completed and cataloged in Google Drive successfully.</p>
-            </div>
-        </div>
-    </main>
-
-    <script>
-        // =========================================================================
-        // 1. CONFIGURATION: ENDPOINT AND EXAM SPECIFICATION QUESTION BANKS
-        // =========================================================================
-        const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbzfRoSb8V2iMihpeHYoYH-mm8wVTp4IkVZ90dRrKB6-bTGA2q5wvsnEBl00X2say7V2KQ/exec"; 
-        
-        const examData = [
-            // --- PART 1: HOME & ACCOMMODATION ---
-            { id: "Part1_Accommodation_Q1", part: "Part 1: Home and Accommodation", text: "Do you live in a house or an apartment?" },
-            { id: "Part1_Accommodation_Q2", part: "Part 1: Home and Accommodation", text: "How long have you lived there?" },
-            { id: "Part1_Accommodation_Q3", part: "Part 1: Home and Accommodation", text: "What do you like most about your home?" },
-            { id: "Part1_Accommodation_Q4", part: "Part 1: Home and Accommodation", text: "Is there anything you would like to change about your home?" },
-
-            // --- PART 1: DAILY ROUTINE ---
-            { id: "Part1_Routine_Q1", part: "Part 1: Daily Routine", text: "What is your typical day like?" },
-            { id: "Part1_Routine_Q2", part: "Part 1: Daily Routine", text: "What part of your day do you enjoy the most?" },
-            { id: "Part1_Routine_Q3", part: "Part 1: Daily Routine", text: "Have your daily routines changed in recent years?" },
-            { id: "Part1_Routine_Q4", part: "Part 1: Daily Routine", text: "Do you prefer having a routine or being spontaneous?" },
-
-            // --- PART 2: CUE CARD ---
-            { 
-                id: "Part2_CueCard_RoleModel", 
-                part: "Part 2: Individual Long Turn", 
-                text: "Describe a person who has influenced you in a positive way.\n\nYou should say:\n• Who this person is\n• How you know this person\n• What influence they have had on you\n\n...and explain why this person has been important in your life.\n\n(You will have 1 minute to prepare and then speak for 1–2 minutes.)" 
-            },
-
-            // --- PART 3: INFLUENCE & ROLE MODELS ---
-            { id: "Part3_Discussion_Q1", part: "Part 3: Influence and Role Models", text: "What qualities make someone a good role model?" },
-            { id: "Part3_Discussion_Q2", part: "Part 3: Influence and Role Models", text: "Do young people today have different role models compared to the past?" },
-            { id: "Part3_Discussion_Q3", part: "Part 3: Influence and Role Models", text: "How do celebrities influence people's behavior?" },
-            { id: "Part3_Discussion_Q4", part: "Part 3: Influence and Role Models", text: "Should parents be the main role models for their children? Why or why not?" },
-            { id: "Part3_Discussion_Q5", part: "Part 3: Influence and Role Models", text: "How has social media changed the way people choose role models?" },
-            { id: "Part3_Discussion_Q6", part: "Part 3: Influence and Role Models", text: "Do you think teachers have a significant influence on students' lives?" },
-            { id: "Part3_Discussion_Q7", part: "Part 3: Influence and Role Models", text: "Can negative role models sometimes have a positive effect on people?" },
-            { id: "Part3_Discussion_Q8", part: "Part 3: Influence and Role Models", text: "What responsibilities do public figures have toward society?" }
-        ];
-
-        // =========================================================================
-        // 2. STATE AND EVENT LIFECYCLE VARIABLES
-        // =========================================================================
-        let currentIdx = 0;
-        let mediaRecorder = null;
-        let audioChunks = [];
-        let studentName = "Anonymous_Student";
-        let studentEmail = "Unknown_Email";
-        let studentPhone = "Unknown_Phone";
-        let recordedAnswers = {}; 
-        let timerInterval = null;
-        let secondsElapsed = 0;
-
-        // UI Mappings
-        const setupScreen = document.getElementById('setup-screen');
-        const testScreen = document.getElementById('test-screen');
-        const endScreen = document.getElementById('end-screen');
-        const btnStartTest = document.getElementById('btn-start-test');
-        const btnRecord = document.getElementById('btn-record');
-        const btnNext = document.getElementById('btn-next');
-        const btnNextText = document.getElementById('btn-next-text');
-        const btnReplay = document.getElementById('btn-replay');
-        
-        const questionText = document.getElementById('question-text');
-        const partTag = document.getElementById('part-tag');
-        const progressText = document.getElementById('progress-text');
-        const timerDisplay = document.getElementById('timer-display');
-        const statusText = document.getElementById('status-text');
-        const statusDot = document.getElementById('status-dot');
-        const pulseRing = document.getElementById('pulse-ring');
-        const iconMic = document.getElementById('icon-mic');
-        const iconStop = document.getElementById('icon-stop');
-
-        function speakQuestion(text) {
-            window.speechSynthesis.cancel(); 
-            const cleanSpeechText = text.split("\n\nYou should say:")[0];
-            
-            const utterance = new SpeechSynthesisUtterance(cleanSpeechText);
-            utterance.lang = 'en-GB'; 
-            utterance.rate = 0.92;    
-            window.speechSynthesis.speak(utterance);
-        }
-
-        // =========================================================================
-        // 4. MANUAL FORM REGISTRATION ENGINE
-        // =========================================================================
-        btnStartTest.addEventListener('click', async () => {
-            const nameInput = document.getElementById('student-name').value.trim();
-            const emailInput = document.getElementById('student-email').value.trim();
-            const phoneInput = document.getElementById('student-phone').value.trim();
-
-            // Simple validation layer ensuring fields aren't blank
-            if(!nameInput || !emailInput || !phoneInput) { 
-                alert("Please complete all fields (Name, Email, and Phone Number) to register your test session."); 
-                return; 
-            }
-
-            // Sanitize inputs for filename safety
-            studentName = nameInput.replace(/[^a-zA-Z0-9]/g, "_"); 
-            studentEmail = emailInput;
-            studentPhone = phoneInput.replace(/[^a-zA-Z0-9+]/g, "_");
-
-            try {
-                const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-                mediaRecorder = new MediaRecorder(stream);
-                
-                mediaRecorder.ondataavailable = e => { if (e.data.size > 0) audioChunks.push(e.data); };
-                mediaRecorder.onstop = () => {
-                    const audioBlob = new Blob(audioChunks, { type: 'audio/webm' });
-                    recordedAnswers[examData[currentIdx].id] = audioBlob;
-                    enableNextButton();
-                };
-
-                setupScreen.classList.add('hidden');
-                testScreen.classList.remove('hidden');
-                loadQuestion(0);
-            } catch (err) {
-                alert("Microphone hardware access denied. Please click the padlock in your address bar and toggle microphone access on.");
-            }
-        });
-
-        // =========================================================================
-        // 5. APPLICATION DISPLAY AND RECORDING LOGIC
-        // =========================================================================
-        function loadQuestion(index) {
-            currentIdx = index;
-            audioChunks = [];
-            disableNextButton();
-            resetTimer();
-
-            const q = examData[index];
-            partTag.innerText = q.part;
-            questionText.innerHTML = q.text.replace(/\n/g, "<br>");
-            
-            progressText.innerText = `Question ${index + 1} of ${examData.length}`;
-            btnNextText.innerText = (index === examData.length - 1) ? "Finish Test & Save to Drive" : "Next Question";
-            
-            setTimeout(() => { speakQuestion(q.text); }, 600);
-        }
-
-        btnReplay.addEventListener('click', () => speakQuestion(examData[currentIdx].text));
-
-        btnRecord.addEventListener('click', () => {
-            if (mediaRecorder.state === "inactive") {
-                audioChunks = []; window.speechSynthesis.cancel();
-                mediaRecorder.start(); startTimer();
-                btnRecord.className = "bg-red-600 hover:bg-red-700 text-white w-20 h-20 rounded-full flex items-center justify-center shadow-lg transform scale-105 z-10 focus:outline-none";
-                iconMic.classList.add('hidden'); iconStop.classList.remove('hidden'); pulseRing.classList.remove('hidden'); timerDisplay.classList.remove('hidden');
-                statusText.innerText = "Recording Active..."; statusDot.className = "w-2.5 h-2.5 bg-red-500 rounded-full";
-            } else {
-                mediaRecorder.stop(); stopTimer();
-                btnRecord.className = "bg-gray-800 hover:bg-black text-white w-20 h-20 rounded-full flex items-center justify-center shadow-lg z-10 focus:outline-none";
-                iconStop.classList.add('hidden'); iconMic.classList.remove('hidden'); pulseRing.classList.add('hidden');
-                statusText.innerText = "Response Processed"; statusDot.className = "w-2.5 h-2.5 bg-green-500 rounded-full";
-            }
-        });
-
-        btnNext.addEventListener('click', () => {
-            if (currentIdx < examData.length - 1) {
-                loadQuestion(currentIdx + 1);
-            } else {
-                testScreen.classList.add('hidden');
-                endScreen.classList.remove('hidden');
-                progressText.innerText = "Processing Cloud Sync";
-                uploadAllAnswersToCloud();
-            }
-        });
-
-        // =========================================================================
-        // 6. GOOGLE APPS SCRIPT DRIVE TRANSMISSION ENGINE
-        // =========================================================================
-        async function uploadAllAnswersToCloud() {
-            try {
-                for (const questionId in recordedAnswers) {
-                    const blob = recordedAnswers[questionId];
-                    const base64Data = await new Promise((resolve) => {
-                        const reader = new FileReader();
-                        reader.onloadend = () => resolve(reader.result.split(',')[1]);
-                        reader.readAsDataURL(blob);
-                    });
-
-                    const payload = {
-                        student: studentName,
-                        email: studentEmail,
-                        phone: studentPhone,
-                        fileName: `${studentName}_${questionId}.webm`,
-                        audioData: base64Data
-                    };
-
-                    await fetch(WEB_APP_URL, {
-                        method: "POST",
-                        mode: "no-cors", 
-                        headers: { "Content-Type": "application/json" },
-                        body: JSON.stringify(payload)
-                    });
-                }
-                
-                document.getElementById('sync-loading').classList.add('hidden');
-                document.getElementById('sync-success').classList.remove('hidden');
-                progressText.innerText = "All Files Saved";
-
-            } catch (err) {
-                alert("Network storage upload glitch encountered.");
-                console.error(err);
-            }
-        }
-
-        function enableNextButton() { btnNext.disabled = false; btnNext.className = "bg-blue-600 text-white hover:bg-blue-700 font-semibold px-6 py-2.5 rounded-xl transition-all"; }
-        function disableNextButton() { btnNext.disabled = true; btnNext.className = "bg-gray-200 text-gray-400 font-semibold px-6 py-2.5 rounded-xl cursor-not-allowed"; statusText.innerText = "Microphone Standby"; statusDot.className="w-2.5 h-2.5 bg-gray-400 rounded-full"; }
-        function startTimer() { secondsElapsed = 0; timerInterval = setInterval(() => { secondsElapsed++; const m = String(Math.floor(secondsElapsed/60)).padStart(2,'0'); const s = String(secondsElapsed%60).padStart(2,'0'); timerDisplay.innerText = `${m}:${s}`; }, 1000); }
-        function stopTimer() { clearInterval(timerInterval); }
-        function resetTimer() { clearInterval(timerInterval); timerDisplay.classList.add('hidden'); timerDisplay.innerText = "00:00"; }
-    </script>
-</body>
-</html>
+                    <button id="btn-record" class="bg-gray-800 hover
