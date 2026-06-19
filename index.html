@@ -8,44 +8,50 @@
 </head>
 <body class="bg-gray-50 font-sans min-h-screen flex flex-col justify-between">
 
-    <!-- Header Frame -->
     <header class="bg-blue-600 text-white shadow-md p-4">
         <div class="max-w-4xl mx-auto flex justify-between items-center">
             <h1 class="text-xl font-bold tracking-wide">Official IELTS Speaking Simulation</h1>
-            <span id="progress-text" class="text-sm bg-blue-700 px-3 py-1 rounded-full font-medium">Session Sync</span>
+            <span id="progress-text" class="text-sm bg-blue-700 px-3 py-1 rounded-full font-medium">Registration</span>
         </div>
     </header>
 
-    <!-- Main Dynamic Interface Workspace -->
     <main class="max-w-3xl w-full mx-auto p-6 flex-grow flex flex-col justify-center">
         
-        <!-- Screen 1: Registration Entry / FlexiQuiz Hook Listener -->
         <div id="setup-screen" class="bg-white rounded-2xl shadow-sm border border-gray-100 p-8 text-center space-y-6">
-            <h2 class="text-2xl font-bold text-gray-800">IELTS Speaking Component</h2>
-            <p class="text-gray-500 max-w-md mx-auto text-sm">Welcome back. Your writing module responses have been recorded. Please verify your identifier below to launch the voice recorder pipeline.</p>
-            
-            <div class="max-w-xs mx-auto text-left space-y-2">
-                <label class="text-sm font-medium text-gray-600 block">Student Identity Name:</label>
-                <input type="text" id="student-name" placeholder="Loading name..." class="w-full border border-gray-300 rounded-xl px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-blue-500">
+            <div class="space-y-2">
+                <h2 class="text-2xl font-bold text-gray-800">IELTS Speaking Component</h2>
+                <p class="text-gray-500 max-w-md mx-auto text-sm">Please fill in your contact information below to register and launch the test engine.</p>
             </div>
             
-            <button id="btn-start-test" class="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-8 py-3 rounded-xl shadow-sm transition-all inline-flex items-center space-x-2">
+            <div class="max-w-md mx-auto text-left space-y-4">
+                <div>
+                    <label class="text-sm font-medium text-gray-600 block mb-1">Full Name:</label>
+                    <input type="text" id="student-name" placeholder="e.g. John Doe" class="w-full border border-gray-300 rounded-xl px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                </div>
+                <div>
+                    <label class="text-sm font-medium text-gray-600 block mb-1">Email Address:</label>
+                    <input type="email" id="student-email" placeholder="e.g. john@example.com" class="w-full border border-gray-300 rounded-xl px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                </div>
+                <div>
+                    <label class="text-sm font-medium text-gray-600 block mb-1">Phone Number:</label>
+                    <input type="tel" id="student-phone" placeholder="e.g. +1234567890" class="w-full border border-gray-300 rounded-xl px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                </div>
+            </div>
+            
+            <button id="btn-start-test" class="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-8 py-3 rounded-xl shadow-sm transition-all inline-flex items-center space-x-2 mt-4">
                 <span>Authorize Mic & Start Test</span>
             </button>
         </div>
 
-        <!-- Screen 2: Active Testing Dashboard -->
         <div id="test-screen" class="hidden bg-white rounded-2xl shadow-sm border border-gray-100 p-8 space-y-8">
             
-            <!-- Structural Task Prompts Card -->
             <div class="space-y-4 text-center border-b border-gray-100 pb-6">
                 <div>
                     <span id="part-tag" class="text-xs uppercase tracking-widest font-bold text-blue-600 bg-blue-50 px-2.5 py-1 rounded-md">Part Loading</span>
                 </div>
                 
-                <!-- Dynamic Content Insertion Point -->
                 <div id="prompt-container" class="min-h-[100px] flex items-center justify-center px-4 text-left md:text-center">
-                    <h3 id="question-text" class="text-xl md:text-2xl font-medium text-gray-800 max-w-xl mx-auto leading-relaxed">Loading examiner question text context...</h3>
+                    <h3 id="question-text" class="text-xl md:text-2xl font-medium text-gray-800 max-w-xl mx-auto leading-relaxed">Loading examiner question...</h3>
                 </div>
 
                 <button id="btn-replay" class="text-sm text-blue-500 hover:text-blue-600 inline-flex items-center space-x-1 focus:outline-none transition-colors">
@@ -53,14 +59,12 @@
                 </button>
             </div>
 
-            <!-- Operational Control Target Hub -->
             <div class="flex flex-col items-center justify-center space-y-4">
                 <div id="recording-status" class="text-sm font-medium text-gray-500 flex items-center space-x-2">
                     <span id="status-dot" class="w-2.5 h-2.5 bg-gray-400 rounded-full"></span>
                     <span id="status-text">System Initialization</span>
                 </div>
                 
-                <!-- Centerpiece Control Ring -->
                 <div class="relative flex items-center justify-center">
                     <button id="btn-record" class="bg-gray-800 hover:bg-black text-white w-20 h-20 rounded-full flex items-center justify-center shadow-lg transition-all transform hover:scale-105 focus:outline-none z-10">
                         <svg id="icon-mic" class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z"></path></svg>
@@ -69,11 +73,9 @@
                     <div id="pulse-ring" class="absolute w-20 h-20 bg-red-400 rounded-full opacity-50 animate-ping hidden"></div>
                 </div>
 
-                <!-- Clock Metadata Context Tracker -->
                 <div id="timer-display" class="text-2xl font-mono font-semibold text-gray-700 hidden">00:00</div>
             </div>
 
-            <!-- Navigation Bar Footer Wrapper -->
             <div class="flex justify-between items-center border-t border-gray-100 pt-6">
                 <div class="w-24"></div> 
                 <button id="btn-next" disabled class="bg-gray-200 text-gray-400 font-semibold px-6 py-2.5 rounded-xl cursor-not-allowed transition-all inline-flex items-center space-x-2">
@@ -82,7 +84,6 @@
             </div>
         </div>
 
-        <!-- Screen 3: Post-Exam Cloud Synced Endpoint Banner -->
         <div id="end-screen" class="hidden bg-white rounded-2xl shadow-sm border border-gray-100 p-8 text-center space-y-6">
             <div id="sync-loading" class="space-y-4">
                 <div class="w-12 h-12 border-4 border-blue-600 border-t-transparent rounded-full animate-spin mx-auto"></div>
@@ -95,12 +96,11 @@
                     <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
                 </div>
                 <h2 class="text-2xl font-bold text-gray-800">Evaluation Finished!</h2>
-                <p class="text-gray-600 max-w-sm mx-auto">Both writing and speaking scripts are unified and cataloged in Google Drive successfully.</p>
+                <p class="text-gray-600 max-w-sm mx-auto">Your speaking exam has been completed and cataloged in Google Drive successfully.</p>
             </div>
         </div>
     </main>
 
-    <!-- Global Application Engine -->
     <script>
         // =========================================================================
         // 1. CONFIGURATION: ENDPOINT AND EXAM SPECIFICATION QUESTION BANKS
@@ -145,7 +145,9 @@
         let mediaRecorder = null;
         let audioChunks = [];
         let studentName = "Anonymous_Student";
-        let recordedAnswers = {}; // Fixed tracking structure mapping: { questionId: Blob }
+        let studentEmail = "Unknown_Email";
+        let studentPhone = "Unknown_Phone";
+        let recordedAnswers = {}; 
         let timerInterval = null;
         let secondsElapsed = 0;
 
@@ -169,17 +171,6 @@
         const iconMic = document.getElementById('icon-mic');
         const iconStop = document.getElementById('icon-stop');
 
-        // =========================================================================
-        // 3. PARSING INCOMING FLEXIQUIZ URL PARAMETERS
-        // =========================================================================
-        window.addEventListener('DOMContentLoaded', () => {
-            const urlParams = new URLSearchParams(window.location.search);
-            const passedName = urlParams.get('*name') || urlParams.get('name');
-            if (passedName) {
-                document.getElementById('student-name').value = decodeURIComponent(passedName);
-            }
-        });
-
         function speakQuestion(text) {
             window.speechSynthesis.cancel(); 
             const cleanSpeechText = text.split("\n\nYou should say:")[0];
@@ -191,12 +182,23 @@
         }
 
         // =========================================================================
-        // 4. MICROPHONE STREAM PIPELINE INITIALIZATION
+        // 4. MANUAL FORM REGISTRATION ENGINE
         // =========================================================================
         btnStartTest.addEventListener('click', async () => {
-            const inputName = document.getElementById('student-name').value.trim();
-            if(!inputName) { alert("Please input or verify your name before initializing the voice engine."); return; }
-            studentName = inputName.replace(/[^a-zA-Z0-9]/g, "_"); 
+            const nameInput = document.getElementById('student-name').value.trim();
+            const emailInput = document.getElementById('student-email').value.trim();
+            const phoneInput = document.getElementById('student-phone').value.trim();
+
+            // Simple validation layer ensuring fields aren't blank
+            if(!nameInput || !emailInput || !phoneInput) { 
+                alert("Please complete all fields (Name, Email, and Phone Number) to register your test session."); 
+                return; 
+            }
+
+            // Sanitize inputs for filename safety
+            studentName = nameInput.replace(/[^a-zA-Z0-9]/g, "_"); 
+            studentEmail = emailInput;
+            studentPhone = phoneInput.replace(/[^a-zA-Z0-9+]/g, "_");
 
             try {
                 const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
@@ -205,7 +207,6 @@
                 mediaRecorder.ondataavailable = e => { if (e.data.size > 0) audioChunks.push(e.data); };
                 mediaRecorder.onstop = () => {
                     const audioBlob = new Blob(audioChunks, { type: 'audio/webm' });
-                    // Explicitly link audio chunks to unique question ID structure
                     recordedAnswers[examData[currentIdx].id] = audioBlob;
                     enableNextButton();
                 };
@@ -214,7 +215,7 @@
                 testScreen.classList.remove('hidden');
                 loadQuestion(0);
             } catch (err) {
-                alert("Microphone hardware access block error.");
+                alert("Microphone hardware access denied. Please click the padlock in your address bar and toggle microphone access on.");
             }
         });
 
@@ -270,7 +271,6 @@
         // =========================================================================
         async function uploadAllAnswersToCloud() {
             try {
-                // Iterating safely across dynamic map arrays keys explicitly matching full length arrays
                 for (const questionId in recordedAnswers) {
                     const blob = recordedAnswers[questionId];
                     const base64Data = await new Promise((resolve) => {
@@ -281,6 +281,8 @@
 
                     const payload = {
                         student: studentName,
+                        email: studentEmail,
+                        phone: studentPhone,
                         fileName: `${studentName}_${questionId}.webm`,
                         audioData: base64Data
                     };
@@ -298,7 +300,7 @@
                 progressText.innerText = "All Files Saved";
 
             } catch (err) {
-                alert("Network pipeline execution error.");
+                alert("Network storage upload glitch encountered.");
                 console.error(err);
             }
         }
